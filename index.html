@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>乐谱 Yuepu · 技术支持</title>
+<link rel="icon" href="icon.png">
+<style>
+  :root {
+    --ink: #1d1d1f; --sub: #6e6e73; --bg: #f4f5f7; --card: #ffffff;
+    --border: rgba(20,22,30,0.06); --accent: #0a66d9;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ink: #f2f2f5; --sub: #98989e; --bg: #161519; --card: #232227;
+      --border: rgba(255,255,255,0.08); --accent: #4a8fe8;
+    }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Helvetica Neue", sans-serif;
+    background: var(--bg); color: var(--ink); line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 640px; margin: 0 auto; padding: 56px 24px 80px; }
+  .head { display: flex; align-items: center; gap: 16px; margin-bottom: 8px; }
+  .head img { width: 64px; height: 64px; border-radius: 14px; }
+  h1 { font-size: 26px; font-weight: 700; letter-spacing: 0.2px; }
+  .tag { color: var(--sub); font-size: 15px; margin-bottom: 40px; }
+  h2 { font-size: 17px; font-weight: 600; margin: 36px 0 10px; }
+  .card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 14px; padding: 18px 20px; margin-bottom: 12px;
+  }
+  .card h3 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+  .card p { font-size: 14.5px; color: var(--sub); }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .foot { margin-top: 48px; font-size: 13px; color: var(--sub); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="head">
+    <img src="icon.png" alt="乐谱 Yuepu 图标">
+    <h1>乐谱 Yuepu</h1>
+  </div>
+  <p class="tag">为演出而生的 PDF 乐谱阅读器 · iPhone / iPad / Mac</p>
+
+  <h2>常见问题</h2>
+  <div class="card">
+    <h3>如何导入乐谱?</h3>
+    <p>点击曲库右上角「导入乐谱」选择 PDF 文件,支持一次多选;也可以在其他 App 中用「共享 → 用乐谱打开」导入。App 不包含也不分发任何乐谱内容,请导入你拥有合法使用权的文件。</p>
+  </div>
+  <div class="card">
+    <h3>标注会修改我的 PDF 吗?</h3>
+    <p>不会。标注独立于 PDF 存储,原文件永不被修改;标注可分层显示、随时开关。</p>
+  </div>
+  <div class="card">
+    <h3>多设备之间如何同步?</h3>
+    <p>登录同一 Apple 账户并开启 iCloud 后,曲库与标注会通过你个人的 iCloud 私有数据库自动同步,无需任何设置。断网时看谱、标注、翻页完全不受影响。</p>
+  </div>
+  <div class="card">
+    <h3>支持翻页踏板吗?</h3>
+    <p>蓝牙翻页踏板本质上是方向键键盘,连接后即可翻页;更完整的踏板自定义功能在后续版本提供。</p>
+  </div>
+
+  <h2>联系我们</h2>
+  <div class="card">
+    <p>问题反馈与建议:<a href="mailto:michael.zhao9@outlook.com">michael.zhao9@outlook.com</a><br>
+    我们通常在 1–2 个工作日内回复。</p>
+  </div>
+
+  <p class="foot">
+    <a href="privacy.html">隐私政策</a> · © 2026 Michael Zhao
+  </p>
+</div>
+</body>
+</html>
