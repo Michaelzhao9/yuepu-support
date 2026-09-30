@@ -1,86 +1,282 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-Hans">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>乐谱 Yuepu · 隐私政策</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>乐谱 Yuepu · Podium — 隐私政策</title>
+<meta name="description" content="乐谱 Yuepu（Podium）隐私政策：我们不收集你的任何数据，没有服务器，没有分析或广告 SDK。">
 <link rel="icon" href="icon.png">
 <style>
   :root {
-    --ink: #1d1d1f; --sub: #6e6e73; --bg: #f4f5f7; --card: #ffffff;
-    --border: rgba(20,22,30,0.06); --accent: #0a66d9;
+    color-scheme: light dark;
+    --bg: #f2f2f5;
+    --card: #ffffff;
+    --ink: #17171a;
+    --sub: #6a6a70;
+    --faint: #8e8e94;
+    --line: rgba(20, 22, 30, 0.08);
+    --accent: #0068d6;
+    --chip: rgba(20, 22, 30, 0.05);
+    --shadow: 0 1px 2px rgba(20, 22, 30, 0.05), 0 8px 24px rgba(20, 22, 30, 0.04);
   }
   @media (prefers-color-scheme: dark) {
     :root {
-      --ink: #f2f2f5; --sub: #98989e; --bg: #161519; --card: #232227;
-      --border: rgba(255,255,255,0.08); --accent: #4a8fe8;
+      --bg: #111113;
+      --card: #1c1c1f;
+      --ink: #f2f2f4;
+      --sub: #9d9da4;
+      --faint: #85858c;
+      --line: rgba(255, 255, 255, 0.09);
+      --accent: #4c9bff;
+      --chip: rgba(255, 255, 255, 0.07);
+      --shadow: none;
     }
   }
+
   * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+
   body {
-    font-family: -apple-system, "PingFang SC", "Helvetica Neue", sans-serif;
-    background: var(--bg); color: var(--ink); line-height: 1.75;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue",
+                 "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.7;
+    font-size: 16px;
     -webkit-font-smoothing: antialiased;
   }
-  .wrap { max-width: 640px; margin: 0 auto; padding: 56px 24px 80px; }
-  h1 { font-size: 24px; font-weight: 700; margin-bottom: 4px; }
-  .date { color: var(--sub); font-size: 13.5px; margin-bottom: 32px; }
-  h2 { font-size: 16.5px; font-weight: 600; margin: 28px 0 8px; }
-  p, li { font-size: 15px; }
-  ul { padding-left: 20px; }
+
+  .wrap { max-width: 720px; margin: 0 auto; padding: 28px 20px 72px; }
+
+  .langbar { display: flex; justify-content: flex-end; gap: 4px; margin-bottom: 28px; }
+  .langbar a {
+    font-size: 13px; line-height: 1; padding: 7px 13px; border-radius: 999px;
+    color: var(--sub); text-decoration: none;
+  }
+  .langbar a.on { background: var(--chip); color: var(--ink); font-weight: 500; }
+  .langbar a:hover { color: var(--ink); }
+
+  h1 { font-size: 26px; font-weight: 650; letter-spacing: -0.01em; margin-bottom: 4px; }
+  .date { color: var(--faint); font-size: 13.5px; margin-bottom: 26px; }
+
+  .summary {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    padding: 18px 20px;
+    font-size: 16px;
+    margin-bottom: 36px;
+  }
+  .summary strong { font-weight: 600; }
+  .summary p + p { margin-top: 8px; color: var(--sub); font-size: 14.5px; }
+
+  h2 {
+    font-size: 17px;
+    font-weight: 620;
+    margin: 32px 0 8px;
+    letter-spacing: -0.005em;
+  }
+  p, li { font-size: 15.5px; color: var(--sub); }
+  p + p { margin-top: 10px; }
+  p strong, li strong { color: var(--ink); font-weight: 600; }
+  ul { padding-left: 20px; margin-top: 8px; }
+  li { margin-bottom: 7px; }
+
   a { color: var(--accent); text-decoration: none; }
-  .foot { margin-top: 48px; font-size: 13px; color: var(--sub); }
+  a:hover { text-decoration: underline; }
+
+  .foot {
+    margin-top: 44px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+    font-size: 13px;
+    color: var(--faint);
+    display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between;
+  }
+
+  @media (max-width: 480px) {
+    .wrap { padding: 20px 16px 56px; }
+    h1 { font-size: 23px; }
+    .summary { padding: 15px 16px; }
+  }
+
+  @supports selector(:has(*)) {
+    #en { display: none; }
+    body:has(#en:target) #en { display: block; }
+    body:has(#en:target) #zh { display: none; }
+  }
+  @supports not selector(:has(*)) {
+    #en { border-top: 1px solid var(--line); padding-top: 32px; }
+  }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <h1>隐私政策</h1>
-  <p class="date">乐谱 Yuepu · 生效日期:2026 年 8 月 29 日</p>
 
-  <p>一句话概括:<strong>我们不收集你的任何数据。</strong></p>
+<!-- ==================== 中文 ==================== -->
+<div id="zh" lang="zh-Hans">
+<div class="wrap">
+
+  <nav class="langbar">
+    <a href="#zh" class="on">中文</a>
+    <a href="#en">English</a>
+  </nav>
+
+  <h1>隐私政策</h1>
+  <p class="date">乐谱 Yuepu（Podium）· 最后更新：2026 年 8 月 31 日</p>
+
+  <div class="summary">
+    <p>一句话概括：<strong>我们不收集你的任何数据。</strong></p>
+    <p>App Store 上这个 App 的隐私标签是「未收集数据」。本页说明的每一条，都与那份标签一致。</p>
+  </div>
 
   <h2>我们收集哪些数据</h2>
-  <p>不收集。乐谱 Yuepu 没有我们运营的服务器,也不接入任何数据分析或广告
-  SDK。你在 App 中的一切行为都不会被上报给开发者或任何第三方。</p>
-
-  <h2>关于登录</h2>
-  <p>App 提供 Apple 登录,以及邮箱、手机号登录,用来在同一台设备上建立你的演奏者身份。
-  需要说明的是:<strong>这些身份资料只保存在你的设备本地,不会被发送到任何服务器</strong>
-  ——我们没有服务器可以接收它们。你可以在「设置 › 登录方式」里随时查看已绑定的方式,
-  也可以在同一处<strong>删除账户</strong>,一次抹掉本机的全部身份资料;曲库与标注不受影响,
-  因为它们从不属于账户。</p>
-
-  <h2>关于麦克风</h2>
-  <p>调音器有「听音」功能:打开调音器时,App 会用麦克风听你演奏的音,实时显示音准。
-  <strong>这些音频只在你的设备内存里即时分析,不录制、不保存到任何文件、也不上传</strong>
-  ——我们没有服务器可以接收它。关掉调音器,采集立即停止。首次使用时系统会向你征求麦克风权限,
-  拒绝也不影响 App 的其他功能(调音器仍可播放标准音)。</p>
+  <p>不收集。乐谱 Yuepu 没有我们运营的服务器，也不接入任何数据分析、崩溃统计、广告或追踪 SDK。你打开了哪些谱子、画了什么、练了多久，都不会被上报给开发者或任何第三方。</p>
 
   <h2>你的数据存储在哪里</h2>
   <ul>
-    <li>你导入的乐谱、标注、歌单与练习记录,存储在<strong>你的设备本地</strong>;</li>
-    <li>若你登录了 Apple 账户并开启 iCloud,这些数据会通过 Apple 的
-    <strong>iCloud 私有数据库</strong>(CloudKit)在你自己的设备之间同步。该数据库归属于你的
-    Apple 账户,受 Apple 的加密与隐私保护,<strong>开发者没有任何途径访问其中的内容</strong>;</li>
-    <li>登录产生的身份资料(姓名、邮箱或手机号)只写在本机,不同步、不上传;</li>
-    <li>删除 App 即删除本地数据;iCloud 中的数据可在系统设置的 iCloud 存储管理中删除。</li>
+    <li>你导入的乐谱、标注、歌单与练习记录，存储在<strong>你的设备本地</strong>；</li>
+    <li>若你登录了 Apple 账户并开启 iCloud，这些数据会通过 Apple 的 <strong>iCloud 私有数据库</strong>（CloudKit）在你自己的设备之间同步。该数据库归属于你的 Apple 账户，受 Apple 的加密与隐私保护，<strong>开发者没有任何途径读取其中的内容</strong>；</li>
+    <li>删除 App 即删除本机数据；iCloud 中的数据可在系统设置的 iCloud 存储管理里删除。</li>
   </ul>
 
+  <h2>关于订阅</h2>
+  <p>Podium Pro 通过 <strong>Apple 的 App 内购买</strong>销售。付款全程在 Apple 的系统界面中完成，<strong>我们收不到、也无法存储任何支付信息</strong>——没有卡号，没有账单地址，没有交易记录。</p>
+  <p>App 判断你是否拥有订阅权益，完全由设备本地的 StoreKit 完成，结果只保存在本机。我们没有服务器来记录谁订阅了、订阅了多久。关于 Apple 如何处理购买信息，请参阅 Apple 自己的隐私政策。</p>
+
+  <h2>关于登录</h2>
+  <p>App 提供「通过 Apple 登录」，用来在这台设备上建立你的演奏者身份。登录是可选的，跳过登录不影响任何功能。<strong>这些身份资料只保存在你的设备本地，不会被发送到任何服务器</strong>——我们没有服务器可以接收它们。你可以在「设置 › 账户」里随时<strong>删除账户</strong>，一次抹掉本机的全部身份资料；曲库与标注不受影响，因为它们从不属于账户。</p>
+
+  <h2>关于相机</h2>
+  <p>相机只用于<strong>扫描纸质乐谱</strong>：拍下的画面在设备上直接处理成 PDF，存进你自己的曲库。<strong>图像不会上传到任何地方</strong>，App 也不会以任何其他理由使用相机。首次扫描时系统会向你征求相机权限，拒绝也不影响 App 的其他功能。</p>
+
+  <h2>关于麦克风</h2>
+  <p>麦克风只用于<strong>调音器听音</strong>：打开调音器的听音功能时，App 会分析你演奏的音高，实时显示音准。<strong>这些音频只在设备内存里即时分析，不录制、不写入文件、也不上传</strong>——我们没有服务器可以接收它。关掉调音器，采集立即停止。拒绝麦克风权限不影响 App 的其他功能，调音器仍然可以播放标准音。</p>
+
+  <h2>关于 IMSLP</h2>
+  <p>App 内的 IMSLP 目录检索使用<strong>打包在 App 里的本地索引</strong>，检索过程完全不联网，你搜了什么不会离开你的设备。</p>
+  <p>只有当你主动点击某个条目去下载时，App 才会打开 imslp.org 的页面。那是<strong>你与 IMSLP 之间的直接访问</strong>，遵循 IMSLP 自己的隐私政策与使用条款；我们不经手、不缓存、不镜像他们的文件，也拿不到你在那边的任何行为记录。下载完成后，文件由你的设备收进本地曲库。</p>
+
   <h2>第三方服务</h2>
-  <p>App 仅使用 Apple 提供的系统服务(iCloud/CloudKit)实现同步,不包含任何其他第三方
-  SDK、广告或统计组件。</p>
+  <p>App 仅使用 Apple 提供的系统服务（iCloud / CloudKit 同步、App 内购买）。<strong>没有第三方分析 SDK，没有广告，没有任何形式的追踪</strong>，也没有第三方账号体系。</p>
+
+  <h2>用户之间的数据</h2>
+  <p>App 不提供用户之间的分享、发现、社区或交易功能。你的曲库和标注严格私有，其他用户无从发现，也无法获取。</p>
 
   <h2>儿童隐私</h2>
-  <p>由于我们不收集任何数据,App 也不会收集儿童的任何信息。</p>
+  <p>由于我们不收集任何数据，App 也不会收集儿童的任何信息。</p>
 
   <h2>政策变更</h2>
-  <p>若未来版本引入需要说明的数据处理行为(例如可选的协作功能),我们会在此页面更新说明,并在
-  App 更新说明中明确提示。</p>
+  <p>若未来版本引入需要说明的数据处理行为（例如可选的协作功能），我们会在此页面更新说明，并在 App 更新说明中明确提示。</p>
 
   <h2>联系我们</h2>
-  <p>关于隐私的任何疑问:<a href="mailto:michael.zhao9@outlook.com">michael.zhao9@outlook.com</a></p>
+  <p>关于隐私的任何疑问：<a href="mailto:michael.zhao9@outlook.com">michael.zhao9@outlook.com</a></p>
 
-  <p class="foot"><a href="index.html">← 返回技术支持</a> · © 2026 Michael Zhao</p>
+  <div class="foot">
+    <span><a href="index.html">← 返回技术支持</a></span>
+    <span>© 2026 Michael Zhao</span>
+  </div>
+
 </div>
+</div>
+
+<!-- ==================== English ==================== -->
+<div id="en" lang="en">
+<div class="wrap">
+
+  <nav class="langbar">
+    <a href="#zh">中文</a>
+    <a href="#en" class="on">English</a>
+  </nav>
+
+  <h1>Privacy Policy</h1>
+  <p class="date">Podium (乐谱 Yuepu) · Last updated 31 August 2026</p>
+
+  <div class="summary">
+    <p>In one line: <strong>we collect none of your data.</strong></p>
+    <p>This app's App Store privacy label is "Data Not Collected". Everything on this page is consistent with that label.</p>
+  </div>
+
+  <h2>What we collect</h2>
+  <p>Nothing. Podium has no server operated by us, and includes no analytics, crash-reporting,
+  advertising or tracking SDK of any kind. Which scores you open, what you write on them and how long
+  you practise are never reported to the developer or to any third party.</p>
+
+  <h2>Where your data lives</h2>
+  <ul>
+    <li>The scores you import, along with your annotations, setlists and practice records, are stored
+    <strong>locally on your device</strong>;</li>
+    <li>If you are signed in to your Apple Account with iCloud enabled, that data syncs between your own
+    devices through Apple's <strong>iCloud private database</strong> (CloudKit). That database belongs to your
+    Apple Account and is protected by Apple's encryption and privacy safeguards —
+    <strong>the developer has no way of reading its contents</strong>;</li>
+    <li>Deleting the app deletes the local data. Data held in iCloud can be removed from iCloud storage
+    management in system Settings.</li>
+  </ul>
+
+  <h2>Subscriptions</h2>
+  <p>Podium Pro is sold through <strong>Apple's In-App Purchase</strong>. Payment happens entirely within
+  Apple's own interface, and <strong>we neither receive nor store any payment information</strong> — no card
+  number, no billing address, no transaction record.</p>
+  <p>Whether you hold an active subscription is determined on-device by StoreKit, and the answer stays on
+  your device. We have no server that records who subscribed or for how long. For how Apple handles
+  purchase information, please see Apple's own privacy policy.</p>
+
+  <h2>Signing in</h2>
+  <p>The app offers Sign in with Apple to establish your performer identity on this device. Signing in is
+  optional and skipping it does not restrict any feature. <strong>That identity information is kept only on
+  your device and is never sent to any server</strong> — we have no server to receive it. You can
+  <strong>delete your account</strong> at any time under Settings › Account, which erases all identity
+  information on the device in one step. Your library and annotations are unaffected, because they never
+  belonged to the account in the first place.</p>
+
+  <h2>Camera</h2>
+  <p>The camera is used only to <strong>scan printed sheet music</strong>. What you photograph is processed
+  into a PDF on the device and placed in your own library. <strong>Images are never uploaded anywhere</strong>,
+  and the app uses the camera for no other purpose. The system asks for camera permission the first time you
+  scan; declining does not affect anything else in the app.</p>
+
+  <h2>Microphone</h2>
+  <p>The microphone is used only for <strong>the tuner's listening function</strong>. While it is on, the app
+  analyses the pitch you are playing and shows it in real time. <strong>That audio is analysed in memory as it
+  arrives — it is not recorded, not written to any file, and not uploaded</strong>; we have no server to receive
+  it. Closing the tuner stops capture immediately. Declining microphone permission does not affect anything else
+  in the app, and the tuner can still play reference pitches.</p>
+
+  <h2>IMSLP</h2>
+  <p>IMSLP catalogue search inside the app runs against <strong>an index bundled with the app</strong>. Searching
+  involves no network access at all, and what you search for never leaves your device.</p>
+  <p>Only when you choose to download an entry does the app open a page on imslp.org. That is
+  <strong>a direct interaction between you and IMSLP</strong>, governed by IMSLP's own privacy policy and terms;
+  we do not handle, cache or mirror their files, and we receive no record of what you do there. Once a download
+  finishes, your device takes the file into your local library.</p>
+
+  <h2>Third-party services</h2>
+  <p>The app uses only Apple's own system services (iCloud / CloudKit sync and In-App Purchase).
+  <strong>There is no third-party analytics SDK, no advertising and no tracking of any kind</strong>, and no
+  third-party account system.</p>
+
+  <h2>Between users</h2>
+  <p>The app provides no sharing, discovery, community or marketplace features between users. Your library and
+  annotations are strictly private: no other user can discover or obtain them.</p>
+
+  <h2>Children's privacy</h2>
+  <p>Since we collect no data at all, the app collects no information from children either.</p>
+
+  <h2>Changes to this policy</h2>
+  <p>If a future version introduces data handling that needs explaining (an optional collaboration feature, for
+  instance), we will update this page and say so clearly in the app's release notes.</p>
+
+  <h2>Contact</h2>
+  <p>Any privacy question: <a href="mailto:michael.zhao9@outlook.com">michael.zhao9@outlook.com</a></p>
+
+  <div class="foot">
+    <span><a href="index.html#en">← Back to support</a></span>
+    <span>© 2026 Michael Zhao</span>
+  </div>
+
+</div>
+</div>
+
 </body>
 </html>

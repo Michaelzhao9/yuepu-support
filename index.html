@@ -1,79 +1,594 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-Hans">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>乐谱 Yuepu · 技术支持</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>乐谱 Yuepu · Podium — 技术支持</title>
+<meta name="description" content="乐谱 Yuepu（Podium）是为登台演奏做的 PDF 乐谱阅读器，支持 iPhone 与 iPad。技术支持、常见问题与联系方式。">
 <link rel="icon" href="icon.png">
 <style>
   :root {
-    --ink: #1d1d1f; --sub: #6e6e73; --bg: #f4f5f7; --card: #ffffff;
-    --border: rgba(20,22,30,0.06); --accent: #0a66d9;
+    color-scheme: light dark;
+    --bg: #f2f2f5;
+    --card: #ffffff;
+    --ink: #17171a;
+    --sub: #6a6a70;
+    --faint: #8e8e94;
+    --line: rgba(20, 22, 30, 0.08);
+    --hair: rgba(20, 22, 30, 0.06);
+    --accent: #0068d6;
+    --chip: rgba(20, 22, 30, 0.05);
+    --shadow: 0 1px 2px rgba(20, 22, 30, 0.05), 0 8px 24px rgba(20, 22, 30, 0.04);
   }
   @media (prefers-color-scheme: dark) {
     :root {
-      --ink: #f2f2f5; --sub: #98989e; --bg: #161519; --card: #232227;
-      --border: rgba(255,255,255,0.08); --accent: #4a8fe8;
+      --bg: #111113;
+      --card: #1c1c1f;
+      --ink: #f2f2f4;
+      --sub: #9d9da4;
+      --faint: #85858c;
+      --line: rgba(255, 255, 255, 0.09);
+      --hair: rgba(255, 255, 255, 0.07);
+      --accent: #4c9bff;
+      --chip: rgba(255, 255, 255, 0.07);
+      --shadow: none;
     }
   }
+
   * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
   body {
-    font-family: -apple-system, "PingFang SC", "Helvetica Neue", sans-serif;
-    background: var(--bg); color: var(--ink); line-height: 1.7;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue",
+                 "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.65;
+    font-size: 16px;
     -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
-  .wrap { max-width: 640px; margin: 0 auto; padding: 56px 24px 80px; }
-  .head { display: flex; align-items: center; gap: 16px; margin-bottom: 8px; }
-  .head img { width: 64px; height: 64px; border-radius: 14px; }
-  h1 { font-size: 26px; font-weight: 700; letter-spacing: 0.2px; }
-  .tag { color: var(--sub); font-size: 15px; margin-bottom: 40px; }
-  h2 { font-size: 17px; font-weight: 600; margin: 36px 0 10px; }
+
+  .wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 28px 20px 72px;
+  }
+
+  /* ---------- 语言切换 ---------- */
+  .langbar {
+    display: flex;
+    justify-content: flex-end;
+    gap: 4px;
+    margin-bottom: 28px;
+  }
+  .langbar a {
+    font-size: 13px;
+    line-height: 1;
+    padding: 7px 13px;
+    border-radius: 999px;
+    color: var(--sub);
+    text-decoration: none;
+    background: transparent;
+  }
+  .langbar a.on {
+    background: var(--chip);
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .langbar a:hover { color: var(--ink); }
+
+  /* ---------- 头部 ---------- */
+  .hero {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 18px;
+  }
+  .hero img {
+    width: 76px;
+    height: 76px;
+    border-radius: 18px;
+    flex: none;
+    box-shadow: var(--shadow);
+  }
+  .hero h1 {
+    font-size: 27px;
+    font-weight: 650;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+  }
+  .hero .alt {
+    font-size: 14px;
+    color: var(--faint);
+    font-weight: 400;
+    letter-spacing: 0;
+  }
+  .lede {
+    font-size: 17px;
+    color: var(--sub);
+    margin-bottom: 6px;
+  }
+  .plat {
+    font-size: 13.5px;
+    color: var(--faint);
+    margin-bottom: 40px;
+  }
+
+  /* ---------- 区块 ---------- */
+  section { margin-bottom: 34px; }
+
+  h2 {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--faint);
+    margin-bottom: 10px;
+    padding-left: 2px;
+  }
+
   .card {
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: 14px; padding: 18px 20px; margin-bottom: 12px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
   }
-  .card h3 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
-  .card p { font-size: 14.5px; color: var(--sub); }
+
+  .card > .row {
+    padding: 14px 18px;
+    border-top: 1px solid var(--hair);
+  }
+  .card > .row:first-child { border-top: none; }
+
+  .row b {
+    font-weight: 600;
+    font-size: 15.5px;
+    display: block;
+    margin-bottom: 2px;
+  }
+  .row p {
+    font-size: 14.5px;
+    color: var(--sub);
+  }
+
+  /* ---------- 常见问题 ---------- */
+  .faq .row b {
+    font-size: 15.5px;
+    margin-bottom: 4px;
+  }
+
+  /* ---------- 价格 ---------- */
+  .prices {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 16px 18px 4px;
+  }
+  .price {
+    flex: 1 1 150px;
+    background: var(--chip);
+    border-radius: 11px;
+    padding: 11px 14px;
+  }
+  .price span {
+    display: block;
+    font-size: 12.5px;
+    color: var(--faint);
+  }
+  .price strong {
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .note {
+    padding: 10px 18px 16px;
+    font-size: 13px;
+    color: var(--faint);
+  }
+
+  /* ---------- 联系 ---------- */
+  .contact {
+    padding: 18px;
+    font-size: 15px;
+  }
+  .contact .mail {
+    font-size: 17px;
+    font-weight: 500;
+    display: inline-block;
+    margin: 2px 0 6px;
+  }
+  .contact p { color: var(--sub); font-size: 14.5px; }
+
   a { color: var(--accent); text-decoration: none; }
   a:hover { text-decoration: underline; }
-  .foot { margin-top: 48px; font-size: 13px; color: var(--sub); }
+
+  .foot {
+    margin-top: 44px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+    font-size: 13px;
+    color: var(--faint);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: space-between;
+  }
+
+  @media (max-width: 480px) {
+    .wrap { padding: 20px 16px 56px; }
+    .hero { gap: 14px; }
+    .hero img { width: 62px; height: 62px; border-radius: 15px; }
+    .hero h1 { font-size: 23px; }
+    .lede { font-size: 16px; }
+    .card > .row { padding: 13px 15px; }
+    .prices { padding: 14px 15px 2px; }
+    .note { padding: 8px 15px 14px; }
+    .contact { padding: 15px; }
+  }
+
+  /* ---------- 双语切换：无 :has() 时两种语言并列显示，内容不丢 ---------- */
+  @supports selector(:has(*)) {
+    #en { display: none; }
+    body:has(#en:target) #en { display: block; }
+    body:has(#en:target) #zh { display: none; }
+  }
+  @supports not selector(:has(*)) {
+    #en { border-top: 1px solid var(--line); padding-top: 32px; }
+  }
 </style>
 </head>
 <body>
+
+<!-- ==================== 中文 ==================== -->
+<div id="zh" lang="zh-Hans">
 <div class="wrap">
-  <div class="head">
+
+  <nav class="langbar">
+    <a href="#zh" class="on">中文</a>
+    <a href="#en">English</a>
+  </nav>
+
+  <header class="hero">
     <img src="icon.png" alt="乐谱 Yuepu 图标">
-    <h1>乐谱 Yuepu</h1>
-  </div>
-  <p class="tag">为演出而生的 PDF 乐谱阅读器 · iPhone / iPad / Mac</p>
+    <div>
+      <h1>乐谱 Yuepu</h1>
+      <div class="alt">App Store 英文名：Podium Sheet Music</div>
+    </div>
+  </header>
 
-  <h2>常见问题</h2>
-  <div class="card">
-    <h3>如何导入乐谱?</h3>
-    <p>点击曲库右上角「导入乐谱」选择 PDF 文件,支持一次多选;也可以在其他 App 中用「共享 → 用乐谱打开」导入。App 不包含也不分发任何乐谱内容,请导入你拥有合法使用权的文件。</p>
-  </div>
-  <div class="card">
-    <h3>标注会修改我的 PDF 吗?</h3>
-    <p>不会。标注独立于 PDF 存储,原文件永不被修改;标注可分层显示、随时开关。</p>
-  </div>
-  <div class="card">
-    <h3>多设备之间如何同步?</h3>
-    <p>登录同一 Apple 账户并开启 iCloud 后,曲库与标注会通过你个人的 iCloud 私有数据库自动同步,无需任何设置。断网时看谱、标注、翻页完全不受影响。</p>
-  </div>
-  <div class="card">
-    <h3>支持翻页踏板吗?</h3>
-    <p>蓝牙翻页踏板本质上是方向键键盘,连接后即可翻页;更完整的踏板自定义功能在后续版本提供。</p>
+  <p class="lede">为登台演奏做的 PDF 乐谱阅读器。目标是取代谱台上的那摞纸。</p>
+  <p class="plat">iPhone · iPad（需要 iOS / iPadOS 18 或更高版本）。iPad 配 Apple Pencil 是主力形态。写给乐团乐手、指挥，以及音乐学院的老师和学生。</p>
+
+  <section>
+    <h2>阅读器</h2>
+    <div class="card">
+      <div class="row"><b>翻页不等图</b><p>相邻页提前在后台渲染好，翻过去时页面已经在那儿了。</p></div>
+      <div class="row"><b>三种翻页方式</b><p>滑动手势、点按页面左右边缘，或外接键盘的按键：← 上一页、→ 下一页、PageUp / PageDown、空格向前翻、Esc 退出演出模式。</p></div>
+      <div class="row"><b>演出模式</b><p>隐去全部界面，只留谱面；可以让屏幕在演出期间保持常亮。配上歌单，翻过一首的最后一页会直接接上下一首。</p></div>
+      <div class="row"><b>夜间模式</b><p>页面反色，配暖色纸面，暗光下不刺眼。</p></div>
+      <div class="row"><b>版式</b><p>单页，或横屏下的双页对开；页边留白可以关掉，让谱面占满屏幕；单页可就地旋转 ±90°。</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Apple Pencil 标注</h2>
+    <div class="card">
+      <div class="row"><b>跟手</b><p>走 PencilKit 的系统低延迟通道，压感跟随笔尖力度。</p></div>
+      <div class="row"><b>五种笔</b><p>钢笔、圆珠笔、铅笔、画笔、荧光笔。三个颜色档，每档都能调成任意颜色；三档预设笔宽，也可以无级调节。</p></div>
+      <div class="row"><b>两种橡皮</b><p>擦掉整笔，或按面积擦。Apple Pencil 双击按系统「双点操作」设置切换工具，出厂默认就是切到橡皮。</p></div>
+      <div class="row"><b>文字与图章</b><p>在页面上直接输入文字；记号图章覆盖谱号、音符、休止符、临时记号、力度、演奏法、结构、装饰音八类，共 97 个五线谱记号。</p></div>
+      <div class="row"><b>原文件永不被改写</b><p>标注独立于 PDF 存储，原始文件一个字节都不动；标注层可以一键隐藏，只看干净的谱面。</p></div>
+      <div class="row"><b>为「不丢」设计的存储</b><p>笔画是只增不改的日志，删除写的是墓碑记录，而不是就地抹掉。</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>曲库</h2>
+    <div class="card">
+      <div class="row"><b>文件夹可以无限嵌套</b><p>按乐季、按乐团、按曲目，怎么分都行。</p></div>
+      <div class="row"><b>总谱与分谱叠成一摞</b><p>一部作品的总谱和全部分谱收在一起，点开扇形展开。</p></div>
+      <div class="row"><b>拖拽与批量操作</b><p>长按拖拽整理；多选之后可以批量移动、堆叠、加入歌单、导出或删除。</p></div>
+      <div class="row"><b>歌单</b><p>排好曲目顺序，一键进入演出模式，整场连续翻页。</p></div>
+      <div class="row"><b>页面编辑</b><p>缩略图总览、跳页、拖拽重排、删页。原始 PDF 不动（重排后写的是新文件），标注跟着页走。</p></div>
+      <div class="row"><b>垃圾桶</b><p>删掉的东西保留 7 天再自动清理，其间随时能捞回来。</p></div>
+      <div class="row"><b>练习统计</b><p>打开谱子自动计时，按周汇总。</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>导入</h2>
+    <div class="card">
+      <div class="row"><b>三种方式导入 PDF</b><p>用文件选择器选（可一次多选）、把文件拖进曲库，或在别的 App 里「共享 → 用乐谱打开」。</p></div>
+      <div class="row"><b>同一份谱只存一份</b><p>文件按内容哈希归档，重复导入不会在磁盘上多占一份空间。</p></div>
+      <div class="row"><b>扫描纸质乐谱</b><p>用相机拍成 PDF，自动做透视校正与去阴影；识别到对开页时会问你要不要拆成两页。</p></div>
+      <div class="row"><b>从 IMSLP 找谱</b><p>App 内检索 266,416 条 IMSLP 曲目条目，目录索引打包在 App 里，检索完全不联网。下载动作在 IMSLP 自己的页面上完成，文件下好后直接收进曲库。目录数据来自 IMSLP，以 CC BY-SA 4.0 授权使用。</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>练习工具</h2>
+    <div class="card">
+      <div class="row"><b>节拍器</b><p>拍号可设拍数与音符时值；细分支持四分、八分、三连、十六分；每一拍都能单独设成重音或静音；三种音色：木块、电子、短击。</p></div>
+      <div class="row"><b>调音器</b><p>实时显示音名与音分偏差，也可以给标准音；A4 基准频率在 415–466 Hz 之间可调。</p></div>
+      <div class="row"><b>模拟钢琴</b><p>多点触控键盘，可换八度、可延音。</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>同步</h2>
+    <div class="card">
+      <div class="row"><b>你自己的 iCloud</b><p>曲库与标注通过你个人的 iCloud 私有数据库（CloudKit）在你的设备之间同步。我们没有服务器，也没有账号数据库。</p></div>
+      <div class="row"><b>断网完整可用</b><p>看谱、翻页、标注、走完一整场音乐会，都不需要网络。只有多设备同步、从 IMSLP 下载文件、购买与恢复订阅这三件事需要联网。</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Podium Pro 订阅</h2>
+    <div class="card">
+      <div class="prices">
+        <div class="price"><span>月度</span><strong>¥18 / 月</strong></div>
+        <div class="price"><span>季度</span><strong>¥48 / 3 个月</strong></div>
+        <div class="price"><span>年度</span><strong>¥168 / 年</strong></div>
+      </div>
+      <p class="note">首次订阅含 3 天免费试用。以上为中国区价格，你所在地区的实际价格以 App Store 显示为准。</p>
+      <div class="row"><b>不订阅也能用</b><p>打开已有的谱子、翻页、缩放、查看已经画好的标注、演出模式，以及导出带标注的 PDF。你的东西任何时候都拿得走。</p></div>
+      <div class="row"><b>订阅解锁</b><p>标注、页面编辑、曲库整理、导入、扫描、IMSLP 找谱、多设备同步，以及节拍器 / 调音器 / 钢琴。</p></div>
+      <div class="row"><b>自动续期与取消</b><p>订阅会自动续期，除非在当期结束前至少 24 小时取消；续期费用在当期结束前 24 小时内从你的 Apple 账户扣除。随时可以在「设置 → Apple 账户 → 订阅」中取消，取消后可继续使用到当期结束。</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>这个 App 不做的事</h2>
+    <div class="card">
+      <div class="row"><b>不提供乐谱内容</b><p>App 本身不包含也不分发任何乐谱。请导入你拥有合法使用权的文件。</p></div>
+      <div class="row"><b>用户之间不能互传乐谱</b><p>没有分享、发现、社区，也没有交易功能。你导入的曲库严格私有。</p></div>
+    </div>
+  </section>
+
+  <section class="faq">
+    <h2>常见问题</h2>
+    <div class="card">
+      <div class="row">
+        <b>怎么把乐谱导进来？</b>
+        <p>三种常规方式：一是在曲库里选「导入」，用文件选择器挑 PDF，可以一次多选；二是直接把 PDF 拖进曲库；三是在邮件、浏览器、云盘等 App 里选「共享 → 用乐谱打开」。此外还可以用相机扫描纸质乐谱，或在 App 内检索 IMSLP 目录、到 IMSLP 页面上下载。</p>
+      </div>
+      <div class="row">
+        <b>订阅 Podium Pro 之后能用什么？</b>
+        <p>标注、页面编辑、曲库整理（新建文件夹、堆叠、编辑歌单等）、导入、扫描、IMSLP 找谱、多设备同步，以及节拍器、调音器和钢琴。</p>
+      </div>
+      <div class="row">
+        <b>不订阅还剩什么？</b>
+        <p>打开已有的谱子、翻页、缩放、查看已经画好的标注、演出模式，以及导出带标注的 PDF。看谱和上台演出这条主路径不需要订阅。</p>
+      </div>
+      <div class="row">
+        <b>订阅到期之后，我的乐谱和标注会怎样？</b>
+        <p>一行都不会动。App 退回只读状态：谱子照常打开、照常翻页、已有标注照常显示，也照常能导出带标注的 PDF 带走。我们不会删除、锁定或降级你的任何数据。</p>
+      </div>
+      <div class="row">
+        <b>怎么取消订阅？</b>
+        <p>打开 iOS「设置」，点最上方你的名字（Apple 账户）→「订阅」→ 选择 Podium Pro →「取消订阅」。请在当期结束前至少 24 小时取消，否则会自动续期。在免费试用期内取消不会产生费用。</p>
+      </div>
+      <div class="row">
+        <b>标注会不会丢？换设备怎么办？</b>
+        <p>标注先写在本机，笔画只增不改，删除记的是墓碑记录而不是就地抹掉——这套存储方式就是为「不丢」设计的。登录同一 Apple 账户并开启 iCloud 后，曲库与标注会通过你自己的 iCloud 私有数据库同步到你的其他设备；同步在后台进行，失败会静默重试，不会弹窗打断演奏。多设备同步需要订阅。</p>
+      </div>
+      <div class="row">
+        <b>标注会修改我的原始 PDF 吗？</b>
+        <p>不会。标注独立存储，原文件永不被改写。导出带标注的 PDF 时，生成的是一个新文件。</p>
+      </div>
+      <div class="row">
+        <b>支持哪些蓝牙翻页踏板？怎么连？</b>
+        <p>凡是能发送方向键的踏板都可以用——App 把踏板当作普通的蓝牙键盘看待，所以在 iOS「设置 → 蓝牙」里把踏板配对好即可，App 内不需要做任何连接操作。可用按键是：← 上一页、→ 下一页、PageUp 上一页、PageDown 下一页、空格向前翻、Esc 退出演出模式。如果你的踏板可以自定义键位，映射成 ← / → 最稳妥。</p>
+      </div>
+      <div class="row">
+        <b>需要联网吗？</b>
+        <p>看谱不需要。翻页、标注、演出模式、节拍器、调音器，以及 IMSLP 目录检索都在本地完成，整场音乐会断网也走得完。需要联网的只有三件事：多设备同步、从 IMSLP 页面下载文件、购买与恢复订阅。</p>
+      </div>
+      <div class="row">
+        <b>支持哪些设备？</b>
+        <p>iPhone 和 iPad，需要 iOS / iPadOS 18 或更高版本。标注是围绕 iPad 加 Apple Pencil 设计的；双页对开需要横屏。目前没有 Mac 版。</p>
+      </div>
+      <div class="row">
+        <b>App 里能下载乐谱吗？</b>
+        <p>App 本身不提供任何乐谱内容。IMSLP 检索是帮你找到公开的自由乐谱资源，下载在 IMSLP 自己的页面上完成，是否可在你所在辖区使用请以该页面的说明为准。用户之间也不能互相分享乐谱。</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>联系我们</h2>
+    <div class="card">
+      <div class="contact">
+        <a class="mail" href="mailto:michael.zhao9@outlook.com">michael.zhao9@outlook.com</a>
+        <p>问题反馈、Bug、功能建议都欢迎发到这个邮箱。我们通常在 2 个工作日内回复。如果是崩溃或数据相关的问题，请附上设备型号、系统版本，以及大致的复现步骤。</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="foot">
+    <span><a href="privacy.html">隐私政策</a></span>
+    <span>© 2026 Michael Zhao</span>
   </div>
 
-  <h2>联系我们</h2>
-  <div class="card">
-    <p>问题反馈与建议:<a href="mailto:michael.zhao9@outlook.com">michael.zhao9@outlook.com</a><br>
-    我们通常在 1–2 个工作日内回复。</p>
-  </div>
-
-  <p class="foot">
-    <a href="privacy.html">隐私政策</a> · © 2026 Michael Zhao
-  </p>
 </div>
+</div>
+
+<!-- ==================== English ==================== -->
+<div id="en" lang="en">
+<div class="wrap">
+
+  <nav class="langbar">
+    <a href="#zh">中文</a>
+    <a href="#en" class="on">English</a>
+  </nav>
+
+  <header class="hero">
+    <img src="icon.png" alt="Podium app icon">
+    <div>
+      <h1>Podium</h1>
+      <div class="alt">On the App Store as Podium Sheet Music</div>
+    </div>
+  </header>
+
+  <p class="lede">A PDF sheet music reader built for the stage — made to replace the stack of paper on your music stand.</p>
+  <p class="plat">iPhone and iPad, requires iOS / iPadOS 18 or later. iPad with Apple Pencil is the setup it is designed around. Made for orchestral players, conductors, and conservatory teachers and students.</p>
+
+  <section>
+    <h2>Reader</h2>
+    <div class="card">
+      <div class="row"><b>Page turns don't wait on rendering</b><p>Neighbouring pages are rendered ahead of time in the background, so the next page is already there when you turn.</p></div>
+      <div class="row"><b>Three ways to turn</b><p>Swipe, tap the left or right edge of the page, or use an external keyboard: ← previous, → next, PageUp / PageDown, Space to go forward, Esc to leave performance mode.</p></div>
+      <div class="row"><b>Performance mode</b><p>Everything but the score disappears, and the screen can be kept awake for the duration. With a setlist loaded, turning past the last page of one piece continues into the next.</p></div>
+      <div class="row"><b>Night mode</b><p>Inverted pages on a warm-toned background, easy on the eyes in a dark hall.</p></div>
+      <div class="row"><b>Layout</b><p>Single page, or a two-page spread in landscape. Page margins can be switched off so the music fills the screen, and a page can be rotated ±90° in place.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Apple Pencil annotation</h2>
+    <div class="card">
+      <div class="row"><b>It keeps up with you</b><p>Ink goes through PencilKit's low-latency path, with pressure following the tip.</p></div>
+      <div class="row"><b>Five pens</b><p>Fountain pen, ballpoint, pencil, brush and highlighter. Three colour slots, each settable to any colour, and three preset widths plus a continuous width slider.</p></div>
+      <div class="row"><b>Two erasers</b><p>Erase a whole stroke, or erase by area. Apple Pencil double-tap follows your system Double-Tap setting, which switches to the eraser by default.</p></div>
+      <div class="row"><b>Text and stamps</b><p>Type directly onto the page. The stamp set covers clefs, notes, rests, accidentals, dynamics, articulations, structure marks and ornaments — 97 notation symbols in eight groups.</p></div>
+      <div class="row"><b>Your original PDF is never touched</b><p>Annotations are stored separately from the PDF; the original file is never rewritten. The annotation layer can be hidden with one tap to see a clean page.</p></div>
+      <div class="row"><b>Storage designed so nothing is lost</b><p>Strokes are an append-only log, and deleting writes a tombstone record rather than erasing in place.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Library</h2>
+    <div class="card">
+      <div class="row"><b>Folders nest as deep as you like</b><p>By season, by ensemble, by work — organise it however you think.</p></div>
+      <div class="row"><b>Score and parts in one stack</b><p>Keep the full score and every part together as a stack that fans open when tapped.</p></div>
+      <div class="row"><b>Drag and batch actions</b><p>Long-press to drag things around. Select several at once to move, stack, add to a setlist, export or delete them together.</p></div>
+      <div class="row"><b>Setlists</b><p>Put the pieces in order, then go straight into performance mode and turn through the whole programme.</p></div>
+      <div class="row"><b>Page editing</b><p>Thumbnail overview, jump to a page, drag to reorder, delete pages. The original PDF stays untouched — a new file is written — and annotations travel with their pages.</p></div>
+      <div class="row"><b>Trash</b><p>Deleted items stay for 7 days before they are cleared, and can be restored at any point in between.</p></div>
+      <div class="row"><b>Practice log</b><p>Opening a score starts timing automatically, summarised by week.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Importing</h2>
+    <div class="card">
+      <div class="row"><b>Three ways to bring in a PDF</b><p>Pick files with the file picker (several at once), drag files into the library, or use Share → Open in Podium from another app.</p></div>
+      <div class="row"><b>One copy per score</b><p>Files are stored by content hash, so importing the same PDF twice doesn't take up a second copy on disk.</p></div>
+      <div class="row"><b>Scan printed music</b><p>Photograph it into a PDF, with perspective correction and shadow removal applied automatically. When a two-page spread is detected, Podium offers to split it into two pages.</p></div>
+      <div class="row"><b>Find scores on IMSLP</b><p>Search 266,416 IMSLP catalogue entries inside the app. The index ships with the app, so searching needs no network at all. Downloading happens on IMSLP's own page, and the finished file goes straight into your library. Catalogue data from IMSLP, used under CC BY-SA 4.0.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Practice tools</h2>
+    <div class="card">
+      <div class="row"><b>Metronome</b><p>Set beats per bar and note value; subdivide into quarters, eighths, triplets or sixteenths; accent or mute any individual beat; three sounds — woodblock, electronic and click.</p></div>
+      <div class="row"><b>Tuner</b><p>Live note name and cents deviation, a reference pitch you can play, and an A4 reference adjustable between 415 and 466 Hz.</p></div>
+      <div class="row"><b>Piano</b><p>A multi-touch keyboard with octave shift and sustain.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Sync</h2>
+    <div class="card">
+      <div class="row"><b>Your own iCloud</b><p>Your library and annotations sync between your devices through your personal iCloud private database (CloudKit). There is no server of ours, and no account database.</p></div>
+      <div class="row"><b>Fully usable offline</b><p>Reading, turning pages, annotating and playing an entire concert never need a network. Only three things do: syncing between devices, downloading a file from IMSLP, and buying or restoring a subscription.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Podium Pro subscription</h2>
+    <div class="card">
+      <div class="prices">
+        <div class="price"><span>Monthly</span><strong>¥18 / month</strong></div>
+        <div class="price"><span>Quarterly</span><strong>¥48 / 3 months</strong></div>
+        <div class="price"><span>Yearly</span><strong>¥168 / year</strong></div>
+      </div>
+      <p class="note">A 3-day free trial is included for first-time subscribers. Prices shown are for the China storefront; the price in your region is the one shown in the App Store.</p>
+      <div class="row"><b>Without a subscription</b><p>You can still open the scores you have, turn pages, zoom, view annotations you have already drawn, use performance mode, and export annotated PDFs. Your material is yours to take out at any time.</p></div>
+      <div class="row"><b>A subscription unlocks</b><p>Annotation, page editing, organising your library, importing, scanning, IMSLP search, sync across devices, and the metronome, tuner and piano.</p></div>
+      <div class="row"><b>Renewal and cancellation</b><p>Subscriptions renew automatically unless cancelled at least 24 hours before the end of the current period; renewal is charged to your Apple Account within 24 hours before the period ends. You can cancel any time in Settings → Apple Account → Subscriptions, and keep access until the current period ends.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>What this app does not do</h2>
+    <div class="card">
+      <div class="row"><b>It contains no sheet music</b><p>Podium neither includes nor distributes any scores. Please import files you have the right to use.</p></div>
+      <div class="row"><b>Users cannot pass scores to each other</b><p>There is no sharing, no discovery, no community and no marketplace. The library you import stays strictly private to you.</p></div>
+    </div>
+  </section>
+
+  <section class="faq">
+    <h2>Frequently asked</h2>
+    <div class="card">
+      <div class="row">
+        <b>How do I get my scores in?</b>
+        <p>Three ordinary ways: choose Import in the library and pick PDFs with the file picker (several at once); drag PDFs into the library; or use Share → Open in Podium from Mail, a browser, a cloud drive or any other app. You can also scan printed music with the camera, or search the IMSLP catalogue in the app and download from IMSLP's page.</p>
+      </div>
+      <div class="row">
+        <b>What does Podium Pro unlock?</b>
+        <p>Annotation, page editing, organising the library (new folders, stacks, editing setlists and so on), importing, scanning, IMSLP search, sync across devices, and the metronome, tuner and piano.</p>
+      </div>
+      <div class="row">
+        <b>What can I do without subscribing?</b>
+        <p>Open the scores you already have, turn pages, zoom, view the annotations already drawn on them, use performance mode, and export annotated PDFs. Reading and performing — the path you need on stage — does not require a subscription.</p>
+      </div>
+      <div class="row">
+        <b>What happens to my scores when a subscription ends?</b>
+        <p>Nothing changes about them. The app returns to read-only: scores still open, pages still turn, existing annotations still show, and you can still export annotated PDFs and take them with you. Nothing of yours is deleted, locked or degraded.</p>
+      </div>
+      <div class="row">
+        <b>How do I cancel?</b>
+        <p>Open Settings on iOS, tap your name at the top (Apple Account) → Subscriptions → Podium Pro → Cancel Subscription. Cancel at least 24 hours before the current period ends, otherwise it renews. Cancelling during the free trial is not charged.</p>
+      </div>
+      <div class="row">
+        <b>Can my annotations get lost? What if I change devices?</b>
+        <p>Annotations are written locally first. Strokes are only ever appended, and deleting records a tombstone rather than erasing in place — the storage is designed around not losing anything. Sign in to the same Apple Account with iCloud enabled and your library and annotations sync to your other devices through your own iCloud private database. Syncing happens in the background and retries quietly on failure, so it never interrupts you mid-performance. Sync across devices requires a subscription.</p>
+      </div>
+      <div class="row">
+        <b>Does annotating modify my original PDF?</b>
+        <p>No. Annotations are stored separately and the original file is never rewritten. Exporting an annotated PDF produces a new file.</p>
+      </div>
+      <div class="row">
+        <b>Which Bluetooth page-turner pedals work, and how do I connect one?</b>
+        <p>Any pedal that sends arrow keys works — Podium treats a pedal as an ordinary Bluetooth keyboard, so you pair it under Settings → Bluetooth on iOS and there is nothing to connect inside the app. The keys it responds to are: ← previous page, → next page, PageUp previous, PageDown next, Space forward, Esc to leave performance mode. If your pedal's key mapping is configurable, ← / → is the safest choice.</p>
+      </div>
+      <div class="row">
+        <b>Do I need an internet connection?</b>
+        <p>Not to read. Page turns, annotation, performance mode, the metronome, the tuner and IMSLP catalogue search all run locally, so a whole concert works with no network. Only three things need one: syncing between devices, downloading a file from IMSLP's page, and buying or restoring a subscription.</p>
+      </div>
+      <div class="row">
+        <b>Which devices are supported?</b>
+        <p>iPhone and iPad, running iOS / iPadOS 18 or later. Annotation is designed around iPad with Apple Pencil, and the two-page spread needs landscape orientation. There is no Mac version at this time.</p>
+      </div>
+      <div class="row">
+        <b>Can I download sheet music in the app?</b>
+        <p>Podium itself provides no sheet music. IMSLP search helps you find freely available scores, and the download takes place on IMSLP's own page — whether a given work may be used in your jurisdiction is explained there. Users also cannot share scores with one another.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Contact</h2>
+    <div class="card">
+      <div class="contact">
+        <a class="mail" href="mailto:michael.zhao9@outlook.com">michael.zhao9@outlook.com</a>
+        <p>Questions, bugs and feature requests are all welcome at this address. We normally reply within 2 business days. For a crash or anything involving your data, please include your device model, system version and roughly how to reproduce it.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="foot">
+    <span><a href="privacy.html#en">Privacy Policy</a></span>
+    <span>© 2026 Michael Zhao</span>
+  </div>
+
+</div>
+</div>
+
 </body>
 </html>
